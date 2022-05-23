@@ -3,6 +3,7 @@ $servername = "mysql";
 $username = "root";
 $password = "root";
 $update = false;
+$uri = '';
 
 try {
     $conn = new PDO("mysql:host=$servername;dbname=crud_db", $username, $password);
@@ -11,6 +12,7 @@ try {
 }
 
 if (isset($_GET['id'])) {
+    $uri = '?id=' . $_GET['id'] ?? null;
     $id = $_GET['id'];
     $sql = "SELECT * FROM haiku WHERE id=$id;";
     $data = $conn->query($sql)->fetch();
@@ -33,29 +35,31 @@ if (isset($_POST['ok']) || $update) {
     if (empty($_POST['content'])) {
         $contentError = 'Content is required';
     } else {
-        $content = filter_input(INPUT_POST, 's1', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+        $content = filter_input(INPUT_POST, 'content', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
     }
 
     if (empty($contentError) && empty($titleErr) && empty($authorErr) && !$update) {
         $sql = "INSERT INTO haiku(author,title,content) VALUES('$author','$title','$content')";
         $conn->query($sql);
-        echo 'Created';
+        echo '<script type="text/JavaScript"> window.location.href="index.php"; </script>';
+
     } elseif (empty($contentError) && empty($titleErr) && empty($authorErr) && $update) {
         $id = $_GET['id'];
-        $sql = "UPDATE haiku SET author='$author', title='$title', content='$content' WHERE id=$id)";
+        $sql = "UPDATE haiku SET author='$author', title='$title', content='$content' WHERE id='$id'";
         $conn->query($sql);
-        echo 'Updated';
+        echo '<script type="text/JavaScript"> window.location.href="index.php"; </script>';
+
     }
 }
 ?>
-<form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']) ?>" method="POST">
+<form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF'] . $uri) ?>" method="POST">
   <div class="mb-3">
     <label for="title" class="form-label">Title</label>
     <input value="<?php echo $data['title'] ?? null; ?>" name="title" maxlength="50" required type="text" class="form-control" id="title" aria-describedby="title">
   </div>
   <div class="mb-3">
     <label for="author" class="form-label">Author</label>
-    <input value="<?php echo $data['author'] ?? null; ?>" name='auhtor' maxlength="80" required type="text" class="form-control" id="author">
+    <input value="<?php echo $data['author'] ?? null; ?>" name='author' maxlength="80" required type="text" class="form-control" id="author">
   </div>
   <div class="mb-3">
     <label for="content" class="form-label">Content</label>
