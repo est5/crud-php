@@ -12,5 +12,5 @@
 <div class="container">
   <?php include_once '../components/form.php';?>
 </div>
-  </body>
-  </html>
+</body>
+</html>
