@@ -9,7 +9,7 @@ CREATE TABLE haiku(
     content VARCHAR(255)
 );
 
-INSERT INTO haiku(title,author,content) VALUES
+INSERT INTO haiku(author,title,content) VALUES
 (
 'Matsuo Basho','The Old Pond','An old silent pond 
 A frog jumps into the pond — 

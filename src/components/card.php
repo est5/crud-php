@@ -11,6 +11,16 @@ try {
     echo "Connection failed: " . $e->getMessage();
 }
 
+if (array_key_exists('delete', $_POST)) {
+    function kekw()
+    {
+        $id = $_GET['id'];
+        global $conn;
+        $conn->query("DELETE FROM haiku WHERE id=$id");
+        echo '<script type="text/JavaScript"> window.location.href="index.php"; </script>';
+    }
+    kekw();
+}
 ?>
 <div class="row row-cols-auto gap-2">
   <?php foreach ($data as $row): ?>
@@ -21,8 +31,10 @@ try {
       <p class="card-text ">
       <?php echo $row['content']; ?>
       </p>
-      <a href="../create.php" class="card-link">Update</a>
-      <a href="#" class="card-link">Delete</a>
+      <div class="d-flex justify-content-evenly align-items-center">
+        <a href="../create.php?id=<?php echo $row['id'] ?>" class="card-link">Update</a>
+        <form method="post" action="<?php echo '?id=' . $row['id'] ?>"> <input type="submit" class="btn btn-danger" name="delete"value='Delete'></form>
+      </div>
     </div>
   </div>
   <?php endforeach;?>
