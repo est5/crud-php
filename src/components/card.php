@@ -12,14 +12,14 @@ try {
 }
 
 if (array_key_exists('delete', $_POST)) {
-    function kekw()
+    function del()
     {
         $id = htmlspecialchars($_GET['id']);
         global $conn;
         $conn->query("DELETE FROM haiku WHERE id=$id");
         echo '<script type="text/JavaScript"> window.location.href="index.php"; </script>';
     }
-    kekw();
+    del();
 }
 ?>
 <div class="row row-cols-auto gap-2">
