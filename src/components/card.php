@@ -14,7 +14,7 @@ try {
 if (array_key_exists('delete', $_POST)) {
     function kekw()
     {
-        $id = $_GET['id'];
+        $id = htmlspecialchars($_GET['id']);
         global $conn;
         $conn->query("DELETE FROM haiku WHERE id=$id");
         echo '<script type="text/JavaScript"> window.location.href="index.php"; </script>';
@@ -29,7 +29,7 @@ if (array_key_exists('delete', $_POST)) {
       <h5 class="card-title"> <?php echo $row['author']; ?> </h5>
       <h6 class="card-subtitle mb-2 text-muted">  <?php echo $row['title']; ?> </h6>
       <p class="card-text ">
-      <?php echo $row['content']; ?>
+        <?php echo $row['content']; ?>
       </p>
       <div class="d-flex justify-content-evenly align-items-center">
         <a href="../create.php?id=<?php echo $row['id'] ?>" class="card-link">Update</a>

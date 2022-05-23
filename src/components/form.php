@@ -12,8 +12,8 @@ try {
 }
 
 if (isset($_GET['id'])) {
-    $uri = '?id=' . $_GET['id'] ?? null;
-    $id = $_GET['id'];
+    $uri = '?id=' . htmlspecialchars($_GET['id']) ?? null;
+    $id = htmlspecialchars($_GET['id']);
     $sql = "SELECT * FROM haiku WHERE id=$id;";
     $data = $conn->query($sql)->fetch();
     $update = true;
