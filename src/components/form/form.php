@@ -1,15 +1,11 @@
 <?php
-$servername = "mysql";
-$username = "root";
-$password = "root";
+
+require_once '../database/Connection.php';
+
 $update = false;
 $uri = '';
 
-try {
-    $conn = new PDO("mysql:host=$servername;dbname=crud_db", $username, $password);
-} catch (PDOException $e) {
-    echo "Connection failed: " . $e->getMessage();
-}
+$conn = Connection::connect();
 
 if (isset($_GET['id'])) {
     $uri = '?id=' . htmlspecialchars($_GET['id']) ?? null;
@@ -51,4 +47,5 @@ if (isset($_POST['ok']) || $update) {
 
     }
 }
+
 require 'form.view.php';

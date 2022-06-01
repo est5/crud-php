@@ -1,15 +1,9 @@
 <?php
 
-$servername = "mysql";
-$username = "root";
-$password = "root";
+require_once '../database/Connection.php';
 
-try {
-    $conn = new PDO("mysql:host=$servername;dbname=crud_db", $username, $password);
-    $data = $conn->query("SELECT * FROM haiku")->fetchAll();
-} catch (PDOException $e) {
-    echo "Connection failed: " . $e->getMessage();
-}
+$conn = Connection::connect();
+$data = $conn->query("SELECT * FROM haiku")->fetchAll();
 
 if (array_key_exists('delete', $_POST)) {
     function del()
