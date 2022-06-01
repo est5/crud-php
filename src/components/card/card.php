@@ -12,14 +12,14 @@ try {
 }
 
 if (array_key_exists('delete', $_POST)) {
-    function update()
+    function del()
     {
         $id = htmlspecialchars($_GET['id']);
         global $conn;
         $conn->query("DELETE FROM haiku WHERE id=$id");
         echo '<script type="text/JavaScript"> window.location.href="index.php"; </script>';
     }
-    update();
+    del();
 }
 
 require 'card.view.php';
