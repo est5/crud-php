@@ -2,16 +2,16 @@
 
 class Connection
 {
-    public static function connect()
+    public static function connect($cfg)
     {
-        $servername = "mysql";
-        $username = "root";
-        $password = "root";
-
         try {
-            return new PDO("mysql:host=$servername;dbname=crud_db", $username, $password);
+            return new PDO(
+                $cfg['connection'] . ';dbname=' . $cfg['name'],
+                $cfg['username'],
+                $cfg['password'],
+                $cfg['options']);
         } catch (PDOException $e) {
-            die("Connection failed: " . $e->getMessage());
+            die(var_dump("Connection failed: " . $e->getMessage()));
         }
     }
 }

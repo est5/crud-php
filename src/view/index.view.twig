@@ -1,7 +1,7 @@
 {% extends "base.twig" %} {% block content %}
 
 <div class="row row-cols-auto gap-2">
-  {%for row in data %}
+  {% for row in data %}
   <div class="card" id="{{ row.id }}" style="width: 18rem">
     <div class="card-body">
       <h5 class="card-title">{{ row.author }}</h5>
@@ -12,14 +12,23 @@
         {{ row.content }}
       </p>
       <div class="d-flex justify-content-evenly align-items-center">
-        <a href="../create.php?id={{ row.id }}" class="card-link">Update</a>
-        <form method="post" action="?id={{ row.id }}">
+        <form method="post" action="">
           <input
             type="submit"
             class="btn btn-danger"
             name="delete"
             value="Delete"
           />
+          <input type="hidden" name="id" value="{{ row.id }}" />
+        </form>
+        <form method="post" action="create">
+          <input
+            type="submit"
+            class="btn btn-info"
+            name="delete"
+            value="Update"
+          />
+          <input type="hidden" name="id" value="{{ row.id }}" />
         </form>
       </div>
     </div>
