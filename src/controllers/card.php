@@ -16,4 +16,12 @@ if (array_key_exists('delete', $_POST)) {
     del();
 }
 
-require '../view/card.view.php';
+require_once '../vendor/autoload.php';
+
+$loader = new \Twig\Loader\FilesystemLoader('../view');
+$twig = new \Twig\Environment($loader);
+$template = $twig->load('card.view.twig');
+
+echo $template->render(['data' => $data]);
+
+// require '../view/card.view.php';

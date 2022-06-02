@@ -1,0 +1,38 @@
+{% extends 'base.twig'%} {% block content %}
+
+<form action="{{ post }}" method="POST">
+  <div class="mb-3">
+    <label for="title" class="form-label">Title</label>
+    <input
+      value="{{ data.title ?? null }}"
+      name="title"
+      maxlength="50"
+      required
+      type="text"
+      class="form-control"
+      id="title"
+      aria-describedby="title"
+    />
+  </div>
+  <div class="mb-3">
+    <label for="author" class="form-label">Author</label>
+    <input
+      value="{{ data.author ?? null }}"
+      name="author"
+      maxlength="80"
+      required
+      type="text"
+      class="form-control"
+      id="author"
+    />
+  </div>
+  <div class="mb-3">
+    <label for="content" class="form-label">Content</label>
+    <textarea class="form-control" id="content" name="content" rows="3">{{
+      data.content ?? null
+    }}</textarea>
+  </div>
+  <input name="ok" value="Submit" type="submit" class="btn btn-primary" />
+</form>
+
+{% endblock content %}

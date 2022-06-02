@@ -4,6 +4,7 @@ require_once '../database/Connection.php';
 
 $update = false;
 $uri = '';
+$data = null;
 
 $conn = Connection::connect();
 
@@ -14,6 +15,8 @@ if (isset($_GET['id'])) {
     $data = $conn->query($sql)->fetch();
     $update = true;
 }
+
+$post = htmlspecialchars($_SERVER['PHP_SELF'] . $uri);
 
 $author = $title = $content = '';
 
@@ -48,4 +51,12 @@ if (isset($_POST['ok']) || $update) {
     }
 }
 
-require '../view/form.view.php';
+require_once '../vendor/autoload.php';
+
+$loader = new \Twig\Loader\FilesystemLoader('../view');
+$twig = new \Twig\Environment($loader);
+$template = $twig->load('form.view.twig');
+
+echo $template->render(['data' => $data, 'post' => $post]);
+
+// require '../view/form.view.php';
