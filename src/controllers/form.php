@@ -48,4 +48,4 @@ if (isset($_POST['ok']) || $update) {
     }
 }
 
-require 'form.view.php';
+require '../view/form.view.php';

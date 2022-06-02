@@ -16,4 +16,4 @@ if (array_key_exists('delete', $_POST)) {
     del();
 }
 
-require 'card.view.php';
+require '../view/card.view.php';
