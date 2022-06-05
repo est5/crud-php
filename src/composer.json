@@ -2,7 +2,9 @@
   "require": {
     "twig/twig": "^3.0"
   },
-  "config": {
-    "vendor-dir": "./src/vendor"
+  "autoload": {
+    "classmap": [
+      "./"
+    ]
   }
 }
