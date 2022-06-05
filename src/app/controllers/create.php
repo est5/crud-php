@@ -21,7 +21,7 @@ function check(): bool
     if (empty($_POST['content'])) {
         $contentError = 'Content is required';
     }
-    return empty(($contentError) && empty($titleErr) && empty($authorErr));
+    return (empty($contentError) && empty($titleErr) && empty($authorErr));
 }
 
 function sanitize()
@@ -37,15 +37,13 @@ if (isset($_POST['update'])) {
     if (check()) {
         $data = sanitize();
         $id = $_POST['update'];
-        $sql = "UPDATE haiku SET author='{$data['author']}', title='{$data['title']}', content='{$data['content']}' WHERE id='$id'";
-        $conn->query($sql);
+        $query->update("haiku", $data, $id);
         echo '<script type="text/JavaScript"> window.location.href="/"; </script>';
     }
 } elseif (isset($_POST['ok'])) {
     if (check()) {
         $data = sanitize();
-        $sql = "INSERT INTO haiku(author,title,content) VALUES('{$data['author']}','{$data['title']}','{$data['content']}')";
-        $conn->query($sql);
+        $query->insert("haiku", $data);
         echo '<script type="text/JavaScript"> window.location.href="/"; </script>';
     }
 }
