@@ -14,32 +14,65 @@ class QueryBuilder
         return $statement->fetchAll(PDO::FETCH_CLASS);
     }
 
-    public function insert($table,$params)
+    public function insert($table,$data)
     {
         $sql = sprintf(
-            'insert into %s (%s) values (%s)',
+            'INSERT INTO %s (%s) VALUES (%s)',
             $table,
-            implode(', ',array_keys($params)),
-            ':' . implode(', :',array_keys($params))
+            implode(', ',array_keys($data)),
+            ':' . implode(', :',array_keys($data))
         );
 
         try{
         $statement=$this->pdo->prepare($sql);
-        $statement->execute($params);
+        $statement->execute($data);
         }catch(Exception $e){
             die('Something wrong');
        }
     }
 
-    public function update($table,$params,$id)
+    public function selectById($table,$id)
+    {
+        $sql=sprintf(
+            'SELECT title,author,content FROM %s WHERE id=%s',
+            $table,
+            ":id"
+        );
+
+        try{
+            $statement=$this->pdo->prepare($sql);
+            $statement->execute([':id' => $id]);
+            return $statement->fetch();
+            }catch(Exception $e){
+                die('Something wrong');
+           }
+    }
+
+    public function deleteById($table,$id)
+    {
+        $sql = sprintf(
+            'DELETE FROM %s WHERE id=%s',
+            $table,
+            ":id"
+        );
+        
+        try{
+            $statement=$this->pdo->prepare($sql);
+            $statement->execute([':id' => $id]);
+            }catch(Exception $e){
+                die('Something wrong');
+           }
+    }
+
+    public function update($table,$data,$id)
     {
         $pairs = [];
-        foreach ($params as $key => $value) {
+        foreach ($data as $key => $value) {
             array_push($pairs, "$key = :$key");
         }
 
         $sql = sprintf(
-            'update %s set %s where id = %s',
+            'UPDATE %s SET %s WHERE id = %s',
             $table,
             implode(', ',array_values($pairs)),
             ":id"
@@ -47,7 +80,7 @@ class QueryBuilder
         
         try{
         $statement=$this->pdo->prepare($sql);
-        $statement->execute([...$params,':id' => $id]);
+        $statement->execute([...$data,':id' => $id]);
         }catch(Exception $e){
             die('Something wrong');
        }

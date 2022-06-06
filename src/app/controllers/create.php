@@ -5,8 +5,7 @@ $data = null;
 $id = null;
 if (isset($_POST['id'])) {
     $id = htmlspecialchars($_POST['id']);
-    $sql = "SELECT * FROM haiku WHERE id=$id;";
-    $data = $conn->query($sql)->fetch();
+    $data = App::get('queryBuilder')->selectById('haiku', $id);
     $update = true;
 }
 $author = $title = $content = '';
@@ -37,16 +36,16 @@ if (isset($_POST['update'])) {
     if (check()) {
         $data = sanitize();
         $id = $_POST['update'];
-        $query->update("haiku", $data, $id);
+        App::get('queryBuilder')->update("haiku", $data, $id);
         echo '<script type="text/JavaScript"> window.location.href="/"; </script>';
     }
 } elseif (isset($_POST['ok'])) {
     if (check()) {
         $data = sanitize();
-        $query->insert("haiku", $data);
+        App::get('queryBuilder')->insert("haiku", $data);
         echo '<script type="text/JavaScript"> window.location.href="/"; </script>';
     }
 }
 
-$template = $twig->load('create.view.twig');
+$template = App::get('template')->load('create.view.twig');
 echo $template->render(['data' => $data, 'update' => $update, 'id' => $id]);
