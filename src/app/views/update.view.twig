@@ -1,9 +1,10 @@
 {% extends 'base.twig'%} {% block content %}
 
-<form action="create" method="POST">
+<form action="update/ok" method="POST">
   <div class="mb-3">
     <label for="title" class="form-label">Title</label>
     <input
+      value="{{ data.title }}"
       name="title"
       maxlength="50"
       required
@@ -16,6 +17,7 @@
   <div class="mb-3">
     <label for="author" class="form-label">Author</label>
     <input
+      value="{{ data.author }}"
       name="author"
       maxlength="80"
       required
@@ -26,14 +28,12 @@
   </div>
   <div class="mb-3">
     <label for="content" class="form-label">Content</label>
-    <textarea
-      class="form-control"
-      id="content"
-      name="content"
-      rows="3"
-    ></textarea>
+    <textarea class="form-control" id="content" name="content" rows="3">{{
+      data.content
+    }}</textarea>
   </div>
   <input name="ok" value="Submit" type="submit" class="btn btn-primary" />
+  <input type="hidden" name="id" value="{{ id }}" />
 </form>
 
 {% endblock content %}
